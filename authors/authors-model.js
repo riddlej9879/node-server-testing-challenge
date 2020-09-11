@@ -9,12 +9,12 @@ function findById(id) {
 }
 
 async function create(data) {
-  const [id] = await db("hobbits").insert(data);
+  const [id] = await db("authors").insert(data);
   return findById(id);
 }
 
 async function remove(id) {
-  return db("hobbits").where({ id }).del();
+  return db("authors").where({ id }).del();
 }
 
 module.exports = {

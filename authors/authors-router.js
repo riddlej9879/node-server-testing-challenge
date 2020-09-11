@@ -3,7 +3,7 @@ const authorsModel = require("./authors-model");
 
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/authors", async (req, res, next) => {
   try {
     res.json(await authorsModel.find());
   } catch (err) {
@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/authors/:id", async (req, res, next) => {
   try {
     const author = await authorsModel.findById(req.params.id);
     if (!author) {
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/authors", async (req, res, next) => {
   try {
     const { newAuthor } = await authorsModel.create(req.body);
     res.status(201).json(newAuthor);
@@ -33,8 +33,11 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/authors/:id", async (req, res, next) => {
   try {
+    const { id } = req.params;
+    await authorsModel.remove(id);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
